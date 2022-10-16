@@ -5,6 +5,14 @@ name = "pypi"
 
 [packages]
 django = "*"
+djangorestframework = "*"
+vobject = "*"
+pillow = "*"
+drf-yasg = "*"
+django-cors-headers = "*"
+django-rest-swagger = "*"
+django-cloudinary-storage = "*"
+whitenoise = "*"
 
 [dev-packages]
 
