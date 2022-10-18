@@ -9,6 +9,7 @@ class Horse(models.Model):
     birth_day = models.DateField()
     weight = models.FloatField()
     email = models.EmailField()
+    create_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = "Horse"

@@ -6,12 +6,13 @@ from .yasg import urlpatterns as doc_urls
 from . import settings
 
 
-schema_view = get_swagger_view(title='Pastebin API')
+schema_view = get_swagger_view(title='Pegasus API')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('apps.users.urls')),
-] 
+    path('horse/', include('apps.horses.urls')),
+    path('medicine/', include('apps.medicine.urls')),
+]
 
 urlpatterns += doc_urls
 if settings.DEBUG:
