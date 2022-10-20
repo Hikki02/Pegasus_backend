@@ -1,3 +1,30 @@
-from django.shortcuts import render
+from django.contrib.auth.models import User
 
-# Create your views here.
+from django.shortcuts import get_object_or_404
+from rest_framework import generics
+
+from .models import Medication
+from .serializers import MedicationSerializer, VaccineSerializer
+from rest_framework import viewsets
+from rest_framework.response import Response
+
+
+class MedicationCreateList(generics.ListCreateAPIView):
+    serializer_class = MedicationSerializer
+    queryset = Medication.objects.filter()
+
+
+class MedicationRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = MedicationSerializer
+    queryset = Medication.objects.filter()
+
+
+class VaccineCreateList(generics.ListCreateAPIView):
+    serializer_class = VaccineSerializer
+    queryset = Medication.objects.filter()
+
+
+class VaccineRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = VaccineSerializer
+    queryset = Medication.objects.filter()
+

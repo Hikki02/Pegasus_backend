@@ -13,6 +13,7 @@ django-cors-headers = "*"
 django-rest-swagger = "*"
 django-cloudinary-storage = "*"
 whitenoise = "*"
+python-decouple = "*"
 
 [dev-packages]
 

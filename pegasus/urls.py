@@ -11,7 +11,7 @@ schema_view = get_swagger_view(title='Pegasus API')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('horse/', include('apps.horses.urls')),
-    path('medicine/', include('apps.medicine.urls')),
+    path('', include('apps.medicine.urls')),
 ]
 
 urlpatterns += doc_urls

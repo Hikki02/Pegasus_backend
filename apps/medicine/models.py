@@ -7,14 +7,20 @@ from .utils import MedicineStatus
 
 class Medication(models.Model):
     horse = models.ForeignKey(Horse, on_delete=models.CASCADE)
-    title = models.CharField()
+    title = models.CharField(max_length=225)
     data = models.DateField()
-    status = models.CharField(max_length=5, default=MedicineStatus.taken, choices=MedicineStatus)
+    status = models.CharField(max_length=20, default=MedicineStatus.taken, choices=MedicineStatus.choice())
+
+    def __str__(self):
+        return f'{self.title}'
 
 
 class Vaccine(models.Model):
     horse = models.ForeignKey(Horse, on_delete=models.CASCADE)
-    title = models.CharField()
+    title = models.CharField(max_length=225)
     data = models.DateField()
-    status = models.CharField(max_length=5, default=MedicineStatus.taken, choices=MedicineStatus)
+    status = models.CharField(max_length=20, default=MedicineStatus.taken, choices=MedicineStatus.choice())
+
+    def __str__(self):
+        return f'{self.title}'
 
