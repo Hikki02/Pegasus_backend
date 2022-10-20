@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "a7a7f0c8fa397984a38ed07f6e4b834b7f0c9ce977f66c3456605a98c712a82e"
+            "sha256": "1df1f5e9880d644d9a5855635020cda9f3d6b713a7bed5b4ad9c21b7d5168566"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -84,6 +84,14 @@
             "index": "pypi",
             "version": "==3.13.0"
         },
+        "django-rest-passwordreset": {
+            "hashes": [
+                "sha256:0d76eb8d0be9636f4404fd35e8a0842c968effeac1d141c55a45aef1ebce54c7",
+                "sha256:f888fcb589c46e2f86f9686751de4cc1350c519aa3b120b993b1d675fd96fad6"
+            ],
+            "index": "pypi",
+            "version": "==1.3.0"
+        },
         "django-rest-swagger": {
             "hashes": [
                 "sha256:48f6aded9937e90ae7cbe9e6c932b9744b8af80cc4e010088b3278c700e0685b",
@@ -100,6 +108,14 @@
             "index": "pypi",
             "version": "==3.14.0"
         },
+        "djangorestframework-simplejwt": {
+            "hashes": [
+                "sha256:1965246979f521c24a3be81d305c3df40bb564e136823868aebc1a1b16e51b8c",
+                "sha256:7613874c322a3f6e330cc118f9f00a3db957fea7f8e3bed81ba451853cd1dbd5"
+            ],
+            "index": "pypi",
+            "version": "==5.2.1"
+        },
         "drf-yasg": {
             "hashes": [
                 "sha256:4a156d195fdccc51b40a227955588d982ca43c2e327927c7713bf967f5589913",
@@ -107,6 +123,14 @@
             ],
             "index": "pypi",
             "version": "==1.21.4"
+        },
+        "gunicorn": {
+            "hashes": [
+                "sha256:9dcc4547dbb1cb284accfb15ab5667a0e5d1881cc443e0677b4882a4067a807e",
+                "sha256:e0a968b5ba15f8a328fdfd7ab1fcb5af4470c28aaf7e55df02a99bc13138e6e8"
+            ],
+            "index": "pypi",
+            "version": "==20.1.0"
         },
         "idna": {
             "hashes": [
@@ -262,6 +286,14 @@
             ],
             "index": "pypi",
             "version": "==9.2.0"
+        },
+        "pyjwt": {
+            "hashes": [
+                "sha256:69285c7e31fc44f68a1feb309e948e0df53259d579295e6cfe2b1792329f05fd",
+                "sha256:d83c3d892a77bbb74d3e1a2cfa90afaadb60945205d1095d9221f04466f64c14"
+            ],
+            "markers": "python_version >= '3.7'",
+            "version": "==2.6.0"
         },
         "pyparsing": {
             "hashes": [
