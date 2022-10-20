@@ -11,6 +11,19 @@ from django.db import models
 
 from pegasus import settings
 
+from django.contrib.auth.models import (
+    BaseUserManager,
+    AbstractBaseUser,
+    PermissionsMixin
+)
+from django.db import models
+from django.dispatch import receiver
+from django_rest_passwordreset.signals import reset_password_token_created
+
+from rest_framework_simplejwt.tokens import RefreshToken
+from decouple import config
+from django.core.mail import send_mail
+
 
 class HorseManager(BaseUserManager):
 
@@ -76,12 +89,37 @@ class Horse(AbstractBaseUser, PermissionsMixin):
             self.uniqueId = uuid.uuid4()
         super(Horse, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
 
+    def get_tokens(self):
+        refresh = RefreshToken.for_user(self)
+        return {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token)
+        }
+
     objects = HorseManager()
 
 
 class HorseImage(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     horse = models.ForeignKey(Horse, on_delete=models.CASCADE)
-    images = models.ImageField()
+    image = models.ImageField()
+
 
     def __str__(self):
-        return f'{self.images}'
+        return f'{self.image}'
+
+
+@receiver(reset_password_token_created)
+def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
+    email_plaintext_message = f"Перейдите по ссылке для восстановления пароля: " \
+                              f"\n http://localhost:3000/?#/resetPassword/?token={reset_password_token.key}"
+    send_mail(
+        # title:
+        "Password Reset for {title}".format(title=reset_password_token.user),
+        # message:
+        email_plaintext_message,
+        # from:
+        "hikki2506@gmail.com",
+        # to:
+        [reset_password_token.user.email]
+    )
