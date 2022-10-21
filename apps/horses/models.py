@@ -1,31 +1,31 @@
+import os
 import uuid
 from datetime import datetime
 
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import (
-    BaseUserManager,
     AbstractBaseUser,
     PermissionsMixin, AbstractUser
 )
-from django.db import models
-
-from pegasus import settings
-
 from django.contrib.auth.models import (
     BaseUserManager,
     AbstractBaseUser,
     PermissionsMixin
 )
+from django.core.mail import send_mail
 from django.db import models
 from django.dispatch import receiver
 from django_rest_passwordreset.signals import reset_password_token_created
-
 from rest_framework_simplejwt.tokens import RefreshToken
-from decouple import config
-from django.core.mail import send_mail
+
+from pegasus import settings
+
+def get_upload_path(instance, filename):
+    return os.path.join('horse/images/', datetime.now().date().strftime("%Y/%m/%d"), filename)
 
 
-class HorseManager(BaseUserManager):
+
+class UserManager(BaseUserManager):
 
     @classmethod
     def _validate(cls, **kwargs) -> None:
@@ -33,28 +33,26 @@ class HorseManager(BaseUserManager):
             if not k:
                 raise ValueError('You have not entered %s' % v)
 
-    def _create(self, email: str, name, password: str, **extra) -> None:
-        self._validate(email=email, name=name, password=password)
-        user = self.model(email=self.normalize_email(email), name=name,
+    def _create(self, email: str, password: str, **extra) -> None:
+        self._validate(email=email, password=password)
+        user = self.model(email=self.normalize_email(email),
                           **extra)
         user.set_password(raw_password=password)
         user.save()
 
     def create_user(self,
                     email: str,
-                    name: str,
                     password: str) -> None:
-        self._create(email, name, password, )
+        self._create(email, password, )
 
     def create_superuser(self,
                          email: str,
-                         name: str,
                          password: str) -> None:
-        self._create(email, name, password, is_staff=True, is_superuser=True, is_active=True)
+        self._create(email, password, is_staff=True, is_superuser=True, is_active=True)
 
 
 # Create your models here.
-class Horse(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=200)
@@ -72,7 +70,7 @@ class Horse(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ('',)
+
 
     class Meta:
         app_label = 'horses'
@@ -87,7 +85,7 @@ class Horse(AbstractBaseUser, PermissionsMixin):
              update_fields=None):
         if not self.id:
             self.uniqueId = uuid.uuid4()
-        super(Horse, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
+        super(User, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
 
     def get_tokens(self):
         refresh = RefreshToken.for_user(self)
@@ -96,14 +94,14 @@ class Horse(AbstractBaseUser, PermissionsMixin):
             'access': str(refresh.access_token)
         }
 
-    objects = HorseManager()
+    objects = UserManager()
 
 
 class HorseImage(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    horse = models.ForeignKey(Horse, on_delete=models.CASCADE)
-    image = models.ImageField()
-
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='horse')
+    image = models.ImageField(upload_to=get_upload_path, null=True)
+    is_main = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.image}'

@@ -38,7 +38,7 @@ SITE_URL = config('SITE_URL', cast=str)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=list)
 DEFAULT_PASSWORD = config('DEFAULT_PASSWORD', cast=str)
 
-AUTH_USER_MODEL = 'horses.Horse'
+AUTH_USER_MODEL = 'horses.User'
 
 # Application definition
 
@@ -62,6 +62,8 @@ INSTALLED_APPS = [
     "corsheaders",
     'django_rest_passwordreset',
 
+    'rest_framework_simplejwt',
+
     # parler
     'cloudinary',
     'cloudinary_storage',
@@ -76,6 +78,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'pegasus.urls'

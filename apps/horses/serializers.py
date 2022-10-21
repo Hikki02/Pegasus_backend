@@ -217,42 +217,27 @@ from django.shortcuts import get_object_or_404
 #
 #     def update(self, instance, validated_data):
 #         ...
-from apps.horses.models import Horse, HorseImage
+from apps.horses.models import User, HorseImage
 
 
 class HorseImageSerializer(s.ModelSerializer):
     class Meta:
         model = HorseImage
-        fields = ('id', 'horse', 'image')
+        fields = ('user', 'image')
+
+    # def create(self, validated_data):
+    #     user = self.context['request'].user
+    #
+    #     horse_image = HorseImage.objects.create(**validated_data)
+    #     if len(horse_image) > 4:
+    #         return 'You can create only 4 image'
+    #     else:
+    #         return horse_image
 
 
 class HorseSerializer(s.ModelSerializer):
-    user_images = HorseImageSerializer(many=True)
+    # user_images = HorseImageSerializer(many=True)
 
     class Meta:
-        model = Horse
-        exclude = ['password', 'groups', 'user_permissions', 'resetPasswordUUID', 'resetPasswordDate']
-
-
-class UserCRUDSerializer(s.ModelSerializer):
-    password = s.CharField(max_length=400, required=False)
-
-    class Meta:
-        model = Horse
-        fields = "__all__"
-
-    def create(self, validated_data):
-        user = Horse.objects.create(**validated_data)
-        if validated_data['password']:
-            user.set_password(validated_data['password'])
-        user.save()
-        return user
-
-    def update(self, instance, validated_data):
-        for field, value in validated_data.items():
-            if field == 'password':
-                instance.set_password(value)
-            else:
-                setattr(instance, field, value)
-        instance.save()
-        return instance
+        model = User
+        fields = ['id', 'password']

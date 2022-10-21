@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Horse, HorseImage
+from .models import User, HorseImage
 
 
-@admin.register(Horse)
+@admin.register(User)
 class HorseAdmin(admin.ModelAdmin):
     ...
 
