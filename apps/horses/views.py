@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 from apps.horses.models import User, HorseImage
 from apps.horses.serializers import (
-    HorseSerializer, HorseImageSerializer, )
+    HorseSerializer, HorseImageSerializer, HorseProfileSerializer)
 from apps.horses.utils import generateError, generateAuthInfo
 
 
@@ -38,3 +38,18 @@ class HorseImageListCreate(generics.ListCreateAPIView):
             raise ValidationError("You can set only 4 images")
         else:
             return super().create(request, *args, **kwargs)
+
+
+class HorseImageRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = HorseImage.objects.filter()
+    serializer_class = HorseImageSerializer
+
+
+class HorseProfileListCreate(generics.ListCreateAPIView):
+    queryset = User.objects.filter()
+    serializer_class = HorseProfileSerializer
+
+
+class HorseProfileRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.filter()
+    serializer_class = HorseProfileSerializer

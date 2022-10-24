@@ -9,6 +9,10 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
     path('image/', views.HorseImageListCreate.as_view()),
+    path('image/<str:pk>/', views.HorseImageRetrieveUpdateDestroyAPIView.as_view()),
+
+    path('profile/<str:pk>/', views.HorseProfileRetrieveUpdateDestroyAPIView.as_view()),
+    path('profile/', views.HorseProfileListCreate.as_view()),
 
     path('password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
 

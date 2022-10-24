@@ -223,16 +223,7 @@ from apps.horses.models import User, HorseImage
 class HorseImageSerializer(s.ModelSerializer):
     class Meta:
         model = HorseImage
-        fields = ('user', 'image')
-
-    # def create(self, validated_data):
-    #     user = self.context['request'].user
-    #
-    #     horse_image = HorseImage.objects.create(**validated_data)
-    #     if len(horse_image) > 4:
-    #         return 'You can create only 4 image'
-    #     else:
-    #         return horse_image
+        fields = ('id','user', 'image')
 
 
 class HorseSerializer(s.ModelSerializer):
@@ -241,3 +232,11 @@ class HorseSerializer(s.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'password']
+
+
+class HorseProfileSerializer(s.ModelSerializer):
+    # user_images = HorseImageSerializer(many=True)
+
+    class Meta:
+        model = User
+        fields = ('name', 'email', 'birth_day', 'weight', 'examined_at',)
