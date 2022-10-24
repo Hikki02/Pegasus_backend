@@ -79,7 +79,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = "Horses"
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.email}'
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):

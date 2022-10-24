@@ -69,6 +69,17 @@ INSTALLED_APPS = [
     'cloudinary_storage',
 ]
 
+
+INTERNAL_IPS = [
+
+    "127.0.0.1",
+
+]
+
+CSRF_TRUSTED_ORIGINS = ['https://*.pegasus.com', 'https://*.127.0.0.1', 'http://143.110.250.140']
+
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     "corsheaders.middleware.CorsMiddleware",  # cors-headers
@@ -148,13 +159,12 @@ CORS_ORIGIN_ALLOW_ALL = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_URL = 'media/'
+STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'static/'
+MEDIA_ROOT = BASE_DIR / 'media/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
-# MEDIA
-MEDIA_URL = '/media/'  # or any prefix you choose
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # CLOUDINARY_STORAGE
