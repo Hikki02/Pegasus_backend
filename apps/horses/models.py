@@ -20,9 +20,9 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from pegasus import settings
 
+
 def get_upload_path(instance, filename):
     return os.path.join('horse/images/', datetime.now().date().strftime("%Y/%m/%d"), filename)
-
 
 
 class UserManager(BaseUserManager):
@@ -54,11 +54,11 @@ class UserManager(BaseUserManager):
 # Create your models here.
 class User(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    email = models.EmailField(unique=True)
-    name = models.CharField(max_length=200)
-    birth_day = models.DateField(null=True)
-    weight = models.FloatField(null=True)
-    examined_at = models.DateField(null=True)
+    email = models.EmailField(unique=True, null=True, blank=True)
+    name = models.CharField(max_length=200, null=True, blank=True)
+    birth_day = models.DateField(null=True, blank=True)
+    weight = models.FloatField(null=True, blank=True)
+    examined_at = models.DateField(null=True, blank=True)
 
     password = models.CharField(max_length=128, default=make_password(settings.DEFAULT_PASSWORD))
 
@@ -71,7 +71,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
 
-
     class Meta:
         app_label = 'horses'
         db_table = 'horse'
@@ -79,7 +78,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = "Horses"
 
     def __str__(self):
-        return f'{self.email}'
+        return f'{self.id} -- {self.email}'
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
