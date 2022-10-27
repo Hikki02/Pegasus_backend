@@ -17,28 +17,15 @@ class HorseSerializer(s.ModelSerializer):
         fields = ('id', 'password')
 
 
-class HorseProfileSerializer(s.Serializer):
-    id = s.IntegerField(read_only=True)
-    name = s.CharField(max_length=225, required=True)
+class HorseProfileSerializer(s.ModelSerializer):
     email = s.EmailField(required=True)
-    birth_day = s.DateField(required=True)
-    weight = s.IntegerField(required=True)
-    examined_at = s.DateField(required=True)
+
+    class Meta:
+        model = User
+        fields = ('id', 'email', 'name', 'birth_day', 'weight', 'examined_at')
 
     def validate_email(self, value):
         lower_email = value.lower()
         if User.objects.filter(email__iexact=lower_email).exists():
-            raise s.ValidationError("email should be unique")
+            raise s.ValidationError("This email is already taken")
         return lower_email
-
-    def create(self, validated_data):
-        return User.objects.create(**validated_data)
-
-    def update(self, instance, validated_data):
-        instance.email = validated_data.get('email', instance.email)
-        instance.name = validated_data.get('name', instance.name)
-        instance.birth_day = validated_data.get('birth_day', instance.birth_day)
-        instance.weight = validated_data.get('weight', instance.weight)
-        instance.examined_at = validated_data.get('examined_at', instance.examined_at)
-        instance.save()
-        return instance
