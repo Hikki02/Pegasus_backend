@@ -16,10 +16,10 @@ class UserLoginView(generics.CreateAPIView):
     serializer_class = HorseSerializer
 
     def create(self, request, *args, **kwargs):
-        uniqueId = request.data.get('id')
+        id = request.data.get('id')
         password = request.data.get('password')
         try:
-            user = User.objects.get(id=uniqueId)
+            user = User.objects.get(id=id)
         except User.DoesNotExist:
             return Response(**generateError('DOES_NOT_EXIST'))
         checkPassword = check_password(password, user.password)

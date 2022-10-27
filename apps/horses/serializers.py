@@ -25,6 +25,12 @@ class HorseProfileSerializer(s.Serializer):
     weight = s.IntegerField(required=True)
     examined_at = s.DateField(required=True)
 
+    def validate_email(self, value):
+        lower_email = value.lower()
+        if User.objects.filter(email__iexact=lower_email).exists():
+            raise s.ValidationError("email should be unique")
+        return lower_email
+
     def create(self, validated_data):
         return User.objects.create(**validated_data)
 

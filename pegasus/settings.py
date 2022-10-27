@@ -69,7 +69,6 @@ INSTALLED_APPS = [
     'cloudinary_storage',
 ]
 
-
 INTERNAL_IPS = [
 
     "127.0.0.1",
@@ -77,8 +76,6 @@ INTERNAL_IPS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = ['https://*.pegasus.com', 'https://*.127.0.0.1', 'http://143.110.250.140']
-
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -175,7 +172,6 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': 'cOp1YqZvIuRt1BkYTTwvXHOk4XM'
 }
 
-
 cloudinary.config(
     cloud_name="motion-web",
     api_key="591472536788477",
@@ -199,7 +195,6 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
     'ORDERING_PARAM': 'ordering',
 }
-
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
@@ -226,7 +221,6 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(days=7),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=30),
 }
-
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
