@@ -7,8 +7,20 @@ from rest_framework.response import Response
 
 from apps.horses.models import User, HorseImage
 from apps.horses.serializers import (
-    HorseSerializer, HorseImageSerializer, HorseProfileSerializer)
+    HorseSerializer, HorseImageSerializer, HorseProfileSerializer, RegistrationSerializer)
 from apps.horses.utils import generateError, generateAuthInfo
+from pegasus import settings
+
+
+class UserCreate(generics.CreateAPIView):
+    serializer_class = RegistrationSerializer
+    queryset = User.objects.filter()
+
+    def create(self, request, *args, **kwargs):
+        serializer = RegistrationSerializer(data={'password': settings.DEFAULT_PASSWORD}, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(data=f"{settings.SITE_URL}?user={serializer.data['id']}")
 
 
 class UserLoginView(generics.CreateAPIView):

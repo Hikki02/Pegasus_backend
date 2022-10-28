@@ -29,3 +29,18 @@ class HorseProfileSerializer(s.ModelSerializer):
         if User.objects.filter(email__iexact=lower_email).exists():
             raise s.ValidationError("This email is already taken")
         return lower_email
+
+
+class RegistrationSerializer(s.ModelSerializer):
+    password = s.CharField(max_length=128, min_length=8, write_only=True)
+
+    class Meta:
+        model = User
+        fields = ('id', 'password')
+
+    def create(self, validated_data):
+        user = User.objects.create(**validated_data)
+        if validated_data['password']:
+            user.set_password(validated_data['password'])
+        user.save()
+        return user
