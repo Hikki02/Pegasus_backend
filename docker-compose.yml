@@ -27,11 +27,22 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
 
   nginx:
-    image: nginx:latest
+#    image: nginx:latest
+    image: linuxserver/swag
     restart: always
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Bishkek
+      - URL=api.pegasushorse.net
+      - SUBDOMAINS=api
+      - VALIDATION=http
+      - ONLY_SUBDOMAINS=true
+      - STAGING=true
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
       - ./static:/app/static/
+      - lets:/config/keys/
       - ./media:/app/media/
     depends_on:
       - postgres_db
