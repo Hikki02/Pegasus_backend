@@ -24,11 +24,11 @@ class HorseProfileSerializer(s.ModelSerializer):
         model = User
         fields = ('id', 'email', 'name', 'birth_day', 'weight', 'examined_at')
 
-    def validate_email(self, value):
-        lower_email = value.lower()
-        if User.objects.filter(email__iexact=lower_email).exists():
-            raise s.ValidationError("This email is already taken")
-        return lower_email
+    # def validate_email(self, value):
+    #     lower_email = value.lower()
+    #     if User.objects.filter(email__iexact=lower_email).exists():
+    #         raise s.ValidationError("This email is already taken")
+    #     return lower_email
 
 
 class RegistrationSerializer(s.ModelSerializer):

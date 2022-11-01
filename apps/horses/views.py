@@ -3,6 +3,7 @@ from django.db.models import Count
 from rest_framework import generics
 # from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from apps.horses.models import User, HorseImage
@@ -56,13 +57,11 @@ class HorseImageRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIVi
     queryset = HorseImage.objects.filter()
     serializer_class = HorseImageSerializer
 
-    def get_queryset(self):
-        return HorseImage.objects.filter(user=self.request.user)
-
 
 class HorseProfileListCreate(generics.ListCreateAPIView):
-    queryset = User.objects.filter()
+    # queryset = User.objects.filter()
     serializer_class = HorseProfileSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         return User.objects.filter(user=self.request.user)
@@ -71,6 +70,4 @@ class HorseProfileListCreate(generics.ListCreateAPIView):
 class HorseProfileRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.filter()
     serializer_class = HorseProfileSerializer
-
-    def get_queryset(self):
-        return User.objects.filter(user=self.request.user)
+    permission_classes = (IsAuthenticated,)
