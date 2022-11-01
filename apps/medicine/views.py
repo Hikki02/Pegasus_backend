@@ -7,24 +7,37 @@ from .models import Medication, Vaccine
 from .serializers import MedicationSerializer, VaccineSerializer
 from rest_framework import viewsets
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 
 class MedicationCreateList(generics.ListCreateAPIView):
     serializer_class = MedicationSerializer
-    queryset = Medication.objects.filter()
+    permission_classes = IsAuthenticated
+
+    def get_queryset(self):
+        return Medication.objects.filter(user=self.request.user)
 
 
 class MedicationRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = MedicationSerializer
-    queryset = Medication.objects.filter()
+    permission_classes = IsAuthenticated
+
+    def get_queryset(self):
+        return Medication.objects.filter(user=self.request.user)
 
 
 class VaccineCreateList(generics.ListCreateAPIView):
     serializer_class = VaccineSerializer
-    queryset = Vaccine.objects.filter()
+    permission_classes = IsAuthenticated
+
+    def get_queryset(self):
+        return Vaccine.objects.filter(user=self.request.user)
 
 
 class VaccineRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = VaccineSerializer
     queryset = Vaccine.objects.filter()
+    permission_classes = IsAuthenticated
 
+    def get_queryset(self):
+        return Vaccine.objects.filter(user=self.request.user)

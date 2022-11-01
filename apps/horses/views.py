@@ -56,12 +56,21 @@ class HorseImageRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIVi
     queryset = HorseImage.objects.filter()
     serializer_class = HorseImageSerializer
 
+    def get_queryset(self):
+        return HorseImage.objects.filter(user=self.request.user)
+
 
 class HorseProfileListCreate(generics.ListCreateAPIView):
     queryset = User.objects.filter()
     serializer_class = HorseProfileSerializer
 
+    def get_queryset(self):
+        return User.objects.filter(user=self.request.user)
+
 
 class HorseProfileRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.filter()
     serializer_class = HorseProfileSerializer
+
+    def get_queryset(self):
+        return User.objects.filter(user=self.request.user)

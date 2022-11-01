@@ -109,7 +109,7 @@ class HorseImage(models.Model):
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
     email_plaintext_message = f"Перейдите по ссылке для восстановления пароля: " \
-                              f"\n http://localhost:3000/?#/resetPassword/?token={reset_password_token.key}"
+                              f"\n http://127.0.0.1:8000/horse/password_reset/confirm/?token={reset_password_token.key}"
     send_mail(
         # title:
         "Password Reset for {title}".format(title=reset_password_token.user),
