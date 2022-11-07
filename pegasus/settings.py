@@ -71,11 +71,12 @@ INSTALLED_APPS = [
 
 INTERNAL_IPS = [
 
-    "127.0.0.1",
+ "*"
 
 ]
 
-CSRF_TRUSTED_ORIGINS = ['https://*.pegasus.com', 'https://*.127.0.0.1', 'http://143.110.250.140']
+CSRF_TRUSTED_ORIGINS = ['https://*.pegasushorse.com']
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -156,10 +157,12 @@ CORS_ORIGIN_ALLOW_ALL = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-MEDIA_URL = 'media/'
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static/'
+
+MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
@@ -190,8 +193,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 5
+#    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+ #   'PAGE_SIZE': 5
 }
 
 SIMPLE_JWT = {

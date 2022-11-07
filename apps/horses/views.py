@@ -61,7 +61,6 @@ class HorseImageRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIVi
 class HorseProfileListCreate(generics.ListCreateAPIView):
     # queryset = User.objects.filter()
     serializer_class = HorseProfileSerializer
-    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         return User.objects.filter(user=self.request.user)
@@ -70,4 +69,3 @@ class HorseProfileListCreate(generics.ListCreateAPIView):
 class HorseProfileRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.filter()
     serializer_class = HorseProfileSerializer
-    permission_classes = (IsAuthenticated,)
