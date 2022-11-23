@@ -17,6 +17,14 @@ class MedicationCreateList(generics.ListCreateAPIView):
     def get_queryset(self):
         return Medication.objects.filter(user=self.request.user)
 
+class UserPartMedicationList(generics.ListAPIView):
+    serializer_class = MedicationSerializer
+   # permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        return Medication.objects.filter()
+
+
 
 class MedicationRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = MedicationSerializer
@@ -33,6 +41,15 @@ class VaccineCreateList(generics.ListCreateAPIView):
 
     def get_queryset(self):
         return Vaccine.objects.filter(user=self.request.user)
+
+
+class UserPartVaccineList(generics.ListAPIView):
+    serializer_class = VaccineSerializer
+    queryset = Vaccine.objects.filter()
+    #permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        return Vaccine.objects.filter()
 
 
 class VaccineRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
